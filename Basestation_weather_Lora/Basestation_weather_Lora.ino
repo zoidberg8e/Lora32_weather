@@ -38,6 +38,8 @@ String LoRaBattery;
 String LoRaPressure;
 String LoRaTemperature;
 
+const uint8_t vbatPin = 35;
+
 void setup() { 
   
   //reset OLED display via software
@@ -78,11 +80,16 @@ void setup() {
   display.setCursor(0,10);
   display.println("LoRa Initializing OK!");
   display.display();  
+  
+  //initialize vbat pin
+  pinMode(vbatPin, INPUT);
+
 }
 
 void loop() {
 
   //try to parse Voltage Package
+  float vbat = (float)(analogRead(vbatPin)) / 4095*2*3.3*1.1;
   int packetSize = LoRa.parsePacket();
   if (packetSize) {
     //received a packet
@@ -90,8 +97,24 @@ void loop() {
 
     //read packet
     while (LoRa.available()) {
-      LoRaBattery = LoRa.readString();
-      Serial.print(LoRaBattery);
+      String LoRaPacket = LoRa.readString();
+      if (LoRaPacket.substring(0,4)=="Batt"){
+        LoRaBattery = LoRaPacket;
+        Serial.print("Battery detected");
+        Serial.print(LoRaBattery);
+      }
+      if (LoRaPacket.substring(0,4)=="Temp"){
+        LoRaTemperature = LoRaPacket;
+        Serial.print("Temperature detected");
+        Serial.print(LoRaTemperature);
+      }
+      if (LoRaPacket.substring(0,4)=="Pres"){
+        LoRaPressure = LoRaPacket;
+        Serial.print("pressure detected");
+        Serial.print(LoRaPressure);
+      }
+      
+      Serial.print(LoRaPacket);
     }
   }
 
@@ -105,14 +128,18 @@ void loop() {
    display.setCursor(0,0);
    display.print("LoRa Weather");
    display.setCursor(0,10);
-   display.print("B:"+LoRaBattery);
+   display.print(LoRaBattery);
    display.setCursor(0,20);
-   display.print("p:"+LoRaPressure);
+   display.print(LoRaPressure);
    display.setCursor(0,30);
-   display.print("t:"+LoRaTemperature);
-   display.setCursor(0,50);
+   display.print(LoRaTemperature);
+   display.setCursor(0,40);
    display.print("RSSI:");
-   display.setCursor(30,50);
+   display.setCursor(30,40);
    display.print(rssi);
+   display.setCursor(0,50);
+   display.print("LocalBattery:");
+   display.setCursor(80,50);
+   display.print(vbat);
    display.display();   
 }

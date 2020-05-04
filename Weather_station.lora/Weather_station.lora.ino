@@ -96,7 +96,7 @@ void loop() {
   float vbat = (float)(analogRead(vbatPin)) / 4095*2*3.3*1.1;
   //Send LoRa packet to receiver
   LoRa.beginPacket();
-  LoRa.print("Battery:");
+  LoRa.print("Battery: ");
   LoRa.print(vbat);
   LoRa.print("v");
   LoRa.endPacket();
@@ -104,7 +104,7 @@ void loop() {
   delay(5000);
   float pressureKPA = mpl115a2.getPressure();
   LoRa.beginPacket();
-  LoRa.print("Pressure:");
+  LoRa.print("Pressure: ");
   LoRa.print(pressureKPA);
   LoRa.print("kpa");
   LoRa.endPacket();
@@ -112,7 +112,7 @@ void loop() {
   delay(5000);
   float temperatureC = mpl115a2.getTemperature();
   LoRa.beginPacket();
-  LoRa.print("Temperature:");
+  LoRa.print("Temperature: ");
   LoRa.print(temperatureC);
   LoRa.print(" C");
   LoRa.endPacket();
