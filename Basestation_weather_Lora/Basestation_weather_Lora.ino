@@ -95,32 +95,6 @@ void loop() {
     }
   }
 
-  // try to parse pressure Package
-  packetSize = LoRa.parsePacket();
-  if (packetSize) {
-    //received a packet
-    Serial.print("Received packet ");
-
-    //read packet
-    while (LoRa.available()) {
-      LoRaPressure = LoRa.readString();
-      Serial.print(LoRaPressure);
-    }
-  }
-    
-  //try to parse temperature package
-  packetSize = LoRa.parsePacket();
-  if (packetSize) {
-    //received a packet
-    Serial.print("Received packet ");
-
-    //read packet
-    while (LoRa.available()) {
-      LoRaTemperature = LoRa.readString();
-      Serial.print(LoRaTemperature);
-    }
-  }
-
     //print RSSI of packet
     int rssi = LoRa.packetRssi();
     Serial.print(" with RSSI ");    
@@ -130,15 +104,15 @@ void loop() {
    display.clearDisplay();
    display.setCursor(0,0);
    display.print("LoRa Weather");
+   display.setCursor(0,10);
+   display.print("B:"+LoRaBattery);
    display.setCursor(0,20);
-   display.print(LoRaBattery);
+   display.print("p:"+LoRaPressure);
    display.setCursor(0,30);
-   display.print(LoRaPressure);
-   display.setCursor(0,40);
-   display.print(LoRaTemperature);
+   display.print("t:"+LoRaTemperature);
    display.setCursor(0,50);
    display.print("RSSI:");
-   display.setCursor(30,40);
+   display.setCursor(30,50);
    display.print(rssi);
    display.display();   
 }
