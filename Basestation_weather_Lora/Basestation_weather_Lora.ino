@@ -6,6 +6,9 @@
 //Libraries for LoRa
 #include <SPI.h>
 #include <LoRa.h>
+#include <WiFi.h>
+#include <TheThingsNetwork.h>
+
 
 //Libraries for OLED Display
 #include <Wire.h>
@@ -26,11 +29,18 @@
 #define BAND 433E6
 
 //OLED pins
-#define OLED_SDA 21
-#define OLED_SCL 22 
+#define OLED_SDA 4
+#define OLED_SCL 15
 #define OLED_RST 16
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
+
+#define DEBUG 1
+#define loraSerial Serial1
+#define debugSerial Serial
+#define freqPlan TTN_FP_EU868
+
+TheThingsNetwork ttn(loraSerial, debugSerial, freqPlan);
 
 Adafruit_SSD1306 display(SCREEN_WIDTH, SCREEN_HEIGHT, &Wire, OLED_RST);
 
@@ -39,8 +49,12 @@ String LoRaPressure;
 String LoRaTemperature;
 
 const uint8_t vbatPin = 35;
+const char* ssid = "isbees";
+const char* password =  "38937389698294142558";
+
 
 void setup() { 
+  debugSerial.begin(115200);
   
   //reset OLED display via software
   pinMode(OLED_RST, OUTPUT);
@@ -83,7 +97,13 @@ void setup() {
   
   //initialize vbat pin
   pinMode(vbatPin, INPUT);
-
+  WiFi.begin(ssid, password);
+  while (WiFi.status() != WL_CONNECTED) {
+    delay(500);
+    Serial.println("Connecting to WiFi..");
+  }
+ 
+  Serial.println("Connected to the WiFi network");
 }
 
 void loop() {
