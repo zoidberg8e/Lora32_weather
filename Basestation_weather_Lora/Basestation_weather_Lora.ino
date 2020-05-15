@@ -26,7 +26,7 @@
 //433E6 for Asia
 //866E6 for Europe
 //915E6 for North America
-#define BAND 433E6
+#define BAND 433500000
 
 //OLED pins
 #define OLED_SDA 4
@@ -35,7 +35,6 @@
 #define SCREEN_WIDTH 128 // OLED display width, in pixels
 #define SCREEN_HEIGHT 64 // OLED display height, in pixels
 
-#define DEBUG 1
 #define loraSerial Serial1
 #define debugSerial Serial
 #define freqPlan TTN_FP_EU868
@@ -53,9 +52,7 @@ const char* ssid = "isbees";
 const char* password =  "38937389698294142558";
 
 
-void setup() { 
-  debugSerial.begin(115200);
-  
+void setup() {   
   //reset OLED display via software
   pinMode(OLED_RST, OUTPUT);
   digitalWrite(OLED_RST, LOW);
