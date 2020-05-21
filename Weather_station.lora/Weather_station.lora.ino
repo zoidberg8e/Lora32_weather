@@ -21,7 +21,7 @@
 //433E6 for Asia
 //866E6 for Europe
 //915E6 for North America
-#define BAND 433E6
+#define BAND 433500000
 
 //OLED pins
 //for Leonboard use this
