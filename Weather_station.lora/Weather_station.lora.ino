@@ -24,6 +24,10 @@
 #define BAND 433E6
 
 //OLED pins
+//for Leonboard use this
+//#define OLED_SDA 4
+//#define OLED_SCL 15
+// for davidboard use that
 #define OLED_SDA 21
 #define OLED_SCL 22 
 #define OLED_RST 16
@@ -101,7 +105,7 @@ void loop() {
   LoRa.print("v");
   LoRa.endPacket();
 
-  delay(5000);
+  delay(1000);
   float pressureKPA = mpl115a2.getPressure();
   LoRa.beginPacket();
   LoRa.print("Pressure: ");
@@ -109,7 +113,7 @@ void loop() {
   LoRa.print("kpa");
   LoRa.endPacket();
 
-  delay(5000);
+  delay(1000);
   float temperatureC = mpl115a2.getTemperature();
   LoRa.beginPacket();
   LoRa.print("Temperature: ");
@@ -117,7 +121,7 @@ void loop() {
   LoRa.print(" C");
   LoRa.endPacket();
 
-  
+
   display.clearDisplay();
   display.setCursor(0,0);
   display.println("LORA Weather Station");
