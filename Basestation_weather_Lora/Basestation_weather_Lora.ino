@@ -48,8 +48,8 @@ String LoRaPressure;
 String LoRaTemperature;
 
 const uint8_t vbatPin = 35;
-const char* ssid = "isbees";
-const char* password =  "38937389698294142558";
+const char* ssid = "wlan-ssid";
+const char* password =  "password";
 
 
 void setup() {   

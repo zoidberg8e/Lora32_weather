@@ -242,7 +242,7 @@ struct wpas {
 //#if 0
 wpas wpa[] = {
 	{ "" , "" },							// Reserved for WiFi Manager
-  { "isbees", "" },
+  { "wlan-ssid", "password" },
 	{ "", "" }
 };
 //#else
